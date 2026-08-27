@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import SurgicalScene from "@/components/SurgicalScene";
 import {
   innovations,
   milestones,
@@ -274,64 +275,35 @@ function Hero() {
           </div>
         </motion.div>
 
-        {/* Doctor card */}
+        {/* WebGL surgical scene */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="relative order-1 lg:order-2 min-h-[480px]"
+          className="relative order-1 lg:order-2 min-h-[480px] rounded-[32px] overflow-hidden border border-white/20 shadow-[0_30px_80px_rgba(8,63,72,0.15)]"
         >
-          <div
-            className="relative rounded-[32px] overflow-hidden p-8 min-h-[430px] flex flex-col justify-end"
-            style={{
-              background: "linear-gradient(160deg, #062f36 0%, #0f6f7d 100%)",
-              color: "#fff",
-            }}
-          >
-            {/* Decorative glow */}
-            <div
-              className="absolute top-7 right-7 w-36 h-36 rounded-full opacity-80"
-              style={{ background: "linear-gradient(135deg, rgba(216,168,71,0.9), transparent 70%)" }}
-            />
-
-            {/* Avatar placeholder */}
-            <div
-              className="absolute top-16 left-1/2 -translate-x-1/2 w-44 h-44 rounded-full border-2 border-white/20 flex items-center justify-center text-white text-5xl font-black"
-              style={{ background: "rgba(255,255,255,0.08)", boxShadow: "inset 0 0 40px rgba(255,255,255,0.1)" }}
-            >
-              DR
-            </div>
-
-            <p className="relative z-10 text-[13px] tracking-widest uppercase text-[#bde4e1] mb-1">
-              Advanced Surgical Care
-            </p>
-            <strong className="relative z-10 text-[22px] leading-tight">
-              Minimally invasive precision with faster recovery focus.
-            </strong>
-
-            {/* ECG line */}
-            <div
-              className="absolute left-6 right-6 bottom-6 h-10 opacity-60"
-              style={{
-                background: "linear-gradient(90deg, transparent 0 5%, #bde4e1 5% 20%, transparent 20% 23%, #bde4e1 23% 27%, transparent 27% 32%, #bde4e1 32% 45%, transparent 45% 100%)",
-              }}
-            />
+          <div className="absolute inset-0 z-0">
+            <SurgicalScene />
           </div>
-
-          {/* Floating badges */}
-          <div
-            className="absolute -top-2 -left-2 bg-white rounded-full px-4 py-2.5 text-sm font-extrabold flex items-center gap-2 float-badge"
-            style={{ color: "#0f6f7d", boxShadow: "0 12px 28px rgba(0,0,0,0.1)" }}
-          >
-            {Icons.star} Robotic Surgery
-          </div>
-          <div
-            className="absolute -bottom-2 -right-2 bg-white rounded-full px-4 py-2.5 text-sm font-extrabold flex items-center gap-2 float-badge"
-            style={{ color: "#0f6f7d", boxShadow: "0 12px 28px rgba(0,0,0,0.1)" }}
-          >
-            {Icons.check} Single-Port Pioneer
+          <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-transparent to-[#062f36]/80 pointer-events-none" />
+          <div className="absolute bottom-8 left-8 right-8 z-20">
+            <p className="text-[12px] tracking-[0.2em] uppercase text-[#d8a847] mb-1">Field of View</p>
+            <h3 className="text-xl font-black text-white tracking-tight">Laparoscopic Perspective</h3>
           </div>
         </motion.div>
+        {/* Floating badges */}
+        <div
+          className="absolute top-4 left-4 z-30 glass-card rounded-full px-4 py-2.5 text-sm font-extrabold flex items-center gap-2 float-badge"
+          style={{ color: "#0f6f7d" }}
+        >
+          {Icons.star} Robotic Surgery
+        </div>
+        <div
+          className="absolute top-1/2 right-4 z-30 glass-card rounded-full px-4 py-2.5 text-sm font-extrabold flex items-center gap-2 float-badge"
+          style={{ color: "#0f6f7d" }}
+        >
+          {Icons.check} Single-Port Pioneer
+        </div>
       </div>
     </section>
   );
