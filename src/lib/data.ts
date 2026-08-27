@@ -72,7 +72,7 @@ export const memberships = [
   "Society of Endoscopic and Laparoscopic Surgeons of India",
   "Indian Association of Gastro-intestinal Endoscopic Surgeons",
   "Asia Pacific Hernia Society",
-  'National Editorial Board — International Journal of Medicine and Public Health',
+  "National Editorial Board — International Journal of Medicine and Public Health",
 ];
 
 export const felicitationImages = [
@@ -84,9 +84,61 @@ export const felicitationImages = [
   { src: "https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=800&q=80", alt: "Award night", caption: "Award Night" },
 ];
 
-export const mediaCoverage = [
-  { source: "Greater Kashmir", url: "#", summary: "Innovation Leader Profile — profiling Dr. Simnani's pioneering contributions" },
-  { source: "The Times of India", url: "#", summary: "“Single-Port Pioneer in Kashmir” — full-page feature on groundbreaking surgery" },
-  { source: "Hindustan Times", url: "#", summary: "World-First Surgery Coverage — breakthrough procedure reported nationally" },
-  { source: "Indian Express", url: "#", summary: "Medical Breakthrough Report — revolutionary single-port technique highlighted" },
+export const newsArticles = [
+  {
+    date: "01 Jul 2026",
+    source: "Greater Kashmir",
+    title: "Ratan Tata Visionary Icon Award 2026 conferred on Dr Simnani",
+    excerpt: "Kashmir-based laparoscopic and robotic surgeon Dr. Rafiq Simnani has been conferred the Ratan Tata Visionary Icon Award 2026 by the Jivran Foundation, recognizing his contributions to advanced laparoscopic and robotic surgery.",
+    tag: "Award",
+    tagColor: "#d8a847",
+  },
+  {
+    date: "06 Aug 2026",
+    source: "GK News",
+    title: "Complex ovarian cyst removed at Kangan — 140mm Grade-4 Endometriosis",
+    excerpt: "In a major milestone for central Kashmir's Ganderbal district, Dr. Simnani led a team at Trauma Hospital Kangan to successfully perform a complex laparoscopic surgery removing a 140mm endometriotic cyst — a Grade-4 Endometriosis case — without requiring referral to a tertiary care hospital.",
+    tag: "Clinical",
+    tagColor: "#0f6f7d",
+  },
+  {
+    date: "23 Oct 2025",
+    source: "Greater Kashmir",
+    title: "First 'Double Stomach' Surgery in Kashmir — Fewer Than 10 Cases in India",
+    excerpt: "Dr. Simnani led a meticulous four-hour operation at Medicare Specialty Hospital to remove a rare gastric duplication cystic disease — the first such surgery in the Kashmir valley. The duplicate stomach, tightly adhered to the liver, gallbladder, lesser sac and greater omentum, was carefully dissected and completely removed. The patient walked the next morning. Fewer than 10 such cases have been reported in India.",
+    tag: "World First",
+    tagColor: "#d8a847",
+  },
+  {
+    date: "28 Aug 2025",
+    source: "Greater Kashmir",
+    title: "Invited as National Faculty at First Global Summit of Surgeons",
+    excerpt: "Dr. Simnani was invited as National Faculty to SELSI NZCON 2025 at Bharat Mandapam, New Delhi — chosen for his extraordinary academic contribution to surgical teaching and training.",
+    tag: "Faculty",
+    tagColor: "#0f6f7d",
+  },
+  {
+    date: "25 Nov 2023",
+    source: "Greater Kashmir",
+    title: "105-Year-Old Man Undergoes Laparoscopic Gallbladder Surgery",
+    excerpt: "Dr. Simnani successfully performed a laparoscopic cholecystectomy on a 105-year-old patient — Muneer Gojarwana — recognised as the world's second oldest person to undergo such surgery. The patient was walking and conversing two hours post-surgery.",
+    tag: "Record",
+    tagColor: "#d8a847",
+  },
+  {
+    date: "20 Jan 2017",
+    source: "KL News / Noora Hospital",
+    title: "First Laparoscopic Bariatric Surgery Performed in Kashmir",
+    excerpt: "Dr. Syed Rafiq Simnani led a team at Noora Hospital, Srinagar to perform the first advanced laparoscopic bariatric surgery in Kashmir — through 4 small holes using world-class laparoscopic staplers, inducing 30–50% weight loss for extreme obesity.",
+    tag: "First in Valley",
+    tagColor: "#d8a847",
+  },
+  {
+    date: "14 Jul 2022",
+    source: "GK News Network",
+    title: "First from Kashmir to bag LRS Fellowship",
+    excerpt: "Dr. Simnani became the first surgeon of the Kashmir Valley to receive the prestigious Fellowship in Advanced Laparoscopic Robotic Surgery (LRS), awarded by IAGES at Rajahmundry, Andhra Pradesh.",
+    tag: "Fellowship",
+    tagColor: "#0f6f7d",
+  },
 ];
