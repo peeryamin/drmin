@@ -343,7 +343,7 @@ function StatsBar() {
             className="text-center p-6 rounded-[26px] bg-white/90 border border-[#dce9e7] shadow-[0_18px_42px_rgba(8,63,72,0.1)] backdrop-blur-md"
           >
             <strong className="text-[clamp(34px,5vw,58px)] font-black leading-none" style={{ color: "#062f36" }}>
-              {counts[i].toLocaleString()}{s.suffix}
+              {i === 3 ? "2026+" : counts[i].toLocaleString()}{i !== 3 ? s.suffix : ""}
             </strong>
             <p className="text-sm font-extrabold mt-2" style={{ color: "#607579" }}>
               {s.label}
