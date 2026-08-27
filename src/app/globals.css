@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #0f6f7d;
+  --primary-dark: #062f36;
+  --primary-soft: #dff4f2;
+  --accent: #d8a847;
+  --accent-soft: #fff2cf;
+  --bg: #f5faf9;
+  --text: #183236;
+  --muted: #607579;
+  --border: #dce9e7;
+  --shadow: 0 24px 70px rgba(8, 63, 72, 0.14);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-inter), Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.6;
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-full font-extrabold text-[15px] transition-all duration-200;
+  }
+  .btn-primary {
+    @apply btn text-white shadow-[0_12px_26px_rgba(15,111,125,0.22)];
+    background: linear-gradient(135deg, #0f6f7d, #062f36);
+  }
+  .btn-primary:hover { transform: translateY(-2px); }
+  .btn-outline {
+    @apply btn bg-transparent border-2;
+    border-color: #0f6f7d;
+    color: #0f6f7d;
+  }
+  .btn-outline:hover { background: #0f6f7d; color: #fff; transform: translateY(-2px); }
+  .btn-whatsapp {
+    @apply btn text-white;
+    background: #25d366;
+    box-shadow: 0 12px 26px rgba(37, 211, 102, 0.22);
+  }
+  .btn-whatsapp:hover { transform: translateY(-2px); }
+
+  .eyebrow {
+    @apply text-[13px] font-black tracking-[0.16em] uppercase mb-3;
+    color: #d8a847;
+  }
+
+  .section-heading {
+    @apply max-w-[760px] mx-auto text-center mb-12;
+  }
+  .section-heading h2 {
+    @apply text-[clamp(32px,4vw,54px)] font-black leading-[1.05] tracking-tight;
+    color: #062f36;
+  }
+  .section-desc {
+    @apply text-[18px] mt-3;
+    color: #607579;
+  }
+}
+
+@keyframes floatBadge {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+.float-badge { animation: floatBadge 4.8s ease-in-out infinite; }
+
+@keyframes pulseRing {
+  0% { opacity: 0.65; transform: scale(0.72); }
+  100% { opacity: 0; transform: scale(1.2); }
+}
+.pulse-ring { animation: pulseRing 3.6s ease-out infinite; }
