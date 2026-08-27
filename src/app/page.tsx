@@ -523,6 +523,128 @@ function Milestones() {
   );
 }
 
+function DistinguishedAchievements() {
+  return (
+    <section className="px-[6vw] py-16">
+      <div className="section-heading">
+        <p className="eyebrow">Legacy</p>
+        <h2>Distinguished Achievements</h2>
+      </div>
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+        {[
+          {
+            title: "World-First Surgical Innovations",
+            items: [
+              "World's first \"Single-Port Day Care Cholecystectomy\" — pioneering outpatient minimally invasive approach",
+              "World's first \"Single-Port Laparoscopic Double Organ Surgery\" (Cholecystectomy with Ovarian Cystectomy) — 2010",
+              "Regional pioneer: First introduction of single-port laparoscopic surgery in Kashmir Valley (2010)",
+            ],
+          },
+          {
+            title: "Clinical Excellence Milestones",
+            items: [
+              "Successfully performed laparoscopic cholecystectomy on a 105-year-old patient — second oldest case in world medical literature",
+              "Pioneered day-care laparoscopic surgery programs in Kashmir Valley (since February 2025)",
+              "Invented proprietary \"Simnani's Technique\" for mini-laparoscopic management of large gallstones (under patent process)",
+            ],
+          },
+          {
+            title: "Leadership & Knowledge Dissemination",
+            items: [
+              "Founding National Faculty in Laparoscopic Surgery; led major surgical workshops",
+              "Organizing Secretary — First Live Laparoscopic Workshop in Kashmir (Fortis Hospital Gurgaon)",
+              "Established \"Laparoscopic Gallbladder Week\" at Govt. Gousia Hospital, Srinagar",
+              "Organized first Laparoscopic Bariatric Surgery Live Workshop in Kashmir (Fortis Hospital Faridabad)",
+            ],
+          },
+        ].map((group) => (
+          <motion.div
+            key={group.title}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="bg-white border border-[#dce9e7] rounded-3xl p-8 shadow-[0_24px_70px_rgba(8,63,72,0.08)]"
+          >
+            <p className="eyebrow">{group.title.split(" ")[0]}</p>
+            <h3 className="text-xl font-black mb-5" style={{ color: "#062f36" }}>
+              {group.title}
+            </h3>
+            <ul className="space-y-4">
+              {group.items.map((item, i) => (
+                <li key={i} className="flex items-start gap-3 text-[15px] leading-relaxed" style={{ color: "#607579" }}>
+                  <span className="mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: "#d8a847" }} />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function AcademicContributions() {
+  return (
+    <section className="px-[6vw] py-16">
+      <div className="section-heading">
+        <p className="eyebrow">Research & Mentorship</p>
+        <h2>Academic Contributions & Research</h2>
+      </div>
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+        {[
+          {
+            title: "Publications & Conference Presentations",
+            items: [
+              "Presented papers and case studies at 15+ national and international surgical conferences",
+              "Editorial Board Member – International Journal of Medicine & Public Health",
+              "National Faculty Member in Laparoscopic Surgery; invited to lead advanced surgical workshops",
+            ],
+          },
+          {
+            title: "Editorial Responsibilities",
+            items: [
+              "Editorial Board Member – International Journal of Medicine & Public Health",
+              "Peer reviewer for select national surgical journals",
+            ],
+          },
+          {
+            title: "Faculty & Mentorship",
+            items: [
+              "National Faculty Member in Laparoscopic Surgery",
+              "Invited to lead advanced surgical workshops across India",
+              "Mentored dozens of surgeons in minimally invasive techniques",
+            ],
+          },
+        ].map((group) => (
+          <motion.div
+            key={group.title}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="bg-white border border-[#dce9e7] rounded-3xl p-8 shadow-[0_24px_70px_rgba(8,63,72,0.08)]"
+          >
+            <p className="eyebrow">{group.title.split(" ")[0]}</p>
+            <h3 className="text-xl font-black mb-5" style={{ color: "#062f36" }}>
+              {group.title}
+            </h3>
+            <ul className="space-y-4">
+              {group.items.map((item, i) => (
+                <li key={i} className="flex items-start gap-3 text-[15px] leading-relaxed" style={{ color: "#607579" }}>
+                  <span className="mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: "#d8a847" }} />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function Credentials() {
   return (
     <section id="credentials" className="px-[6vw] py-20">
@@ -756,6 +878,8 @@ export default function Home() {
       <Innovations />
       <ArticleSection />
       <Milestones />
+      <DistinguishedAchievements />
+      <AcademicContributions />
       <Credentials />
       <Gallery />
       <Footer />
