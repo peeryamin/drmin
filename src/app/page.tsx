@@ -314,7 +314,6 @@ function StatsBar() {
     { value: 16, suffix: "+", label: "Years Experience" },
     { value: 7500, suffix: "+", label: "Laparoscopic Procedures" },
     { value: 15, suffix: "+", label: "Conferences" },
-    { value: 2026, suffix: "", label: "Visionary Icon Award" },
   ];
   const [counts, setCounts] = useState(stats.map(() => 0));
 
