@@ -10,7 +10,7 @@ import {
   expertise,
   memberships,
   felicitationImages,
-  mediaCoverage,
+  newsArticles,
 } from "@/lib/data";
 
 // Icons as inline SVG components
@@ -772,10 +772,10 @@ function Gallery() {
             transition={{ duration: 0.3 }}
             className="max-w-[880px] mx-auto flex flex-col gap-4"
           >
-            {mediaCoverage.map((item, i) => (
+            {newsArticles.map((item, i) => (
               <motion.a
                 key={item.source}
-                href={item.url}
+                href={item.url || `#${i}`}
                 initial={{ opacity: 0, x: -10 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -793,7 +793,7 @@ function Gallery() {
                     {item.source}
                   </strong>
                   <p className="text-[14px] truncate" style={{ color: "#607579" }}>
-                    {item.summary}
+                    {item.excerpt}
                   </p>
                 </div>
                 <div
@@ -853,6 +853,8 @@ export default function Home() {
       <AcademicContributions />
       <Credentials />
       <Gallery />
+      <DistinguishedAchievements />
+      <AcademicContributions />
       <Footer />
     </>
   );
