@@ -291,19 +291,7 @@ function Hero() {
             <h3 className="text-xl font-black text-white tracking-tight">Laparoscopic Perspective</h3>
           </div>
         </motion.div>
-        {/* Floating badges */}
-        <div
-          className="absolute top-4 left-4 z-30 glass-card rounded-full px-4 py-2.5 text-sm font-extrabold flex items-center gap-2 float-badge"
-          style={{ color: "#0f6f7d" }}
-        >
-          {Icons.star} Robotic Surgery
-        </div>
-        <div
-          className="absolute top-1/2 right-4 z-30 glass-card rounded-full px-4 py-2.5 text-sm font-extrabold flex items-center gap-2 float-badge"
-          style={{ color: "#0f6f7d" }}
-        >
-          {Icons.check} Single-Port Pioneer
-        </div>
+      {/* Floating badges removed */}
       </div>
     </section>
   );

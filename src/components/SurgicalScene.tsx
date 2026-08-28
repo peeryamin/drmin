@@ -64,8 +64,12 @@ function Crosshair() {
   useFrame((state) => {
     if (!ref.current) return;
     ref.current.rotation.z = state.clock.getElapsedTime() * 0.15;
-    const mat = ref.current.children[0].material as THREE.MeshBasicMaterial;
-    mat.opacity = 0.5 + Math.sin(state.clock.getElapsedTime() * 1.2) * 0.25;
+    // Animate crosshair line materials directly
+    ref.current.children.forEach((child) => {
+      if (child instanceof THREE.Mesh && child.material && typeof child.material === 'object' && 'opacity' in child.material) {
+        child.material.opacity = 0.5 + Math.sin(state.clock.getElapsedTime() * 1.2) * 0.25;
+      }
+    });
   });
   return (
     <group ref={ref}>
