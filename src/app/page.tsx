@@ -63,6 +63,11 @@ const Icons = {
       <polyline points="12 5 19 12 12 19" />
     </svg>
   ),
+  chevron: (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+      <polyline points="6 9 12 15 18 9" />
+    </svg>
+  ),
   menu: (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
       <line x1="3" y1="6" x2="21" y2="6" />
@@ -79,6 +84,110 @@ const Icons = {
 };
 
 const innovationIcons = [Icons.star, Icons.check, Icons.heart, Icons.trophy, Icons.globe];
+
+// Collapsible section wrapper — dense sections start collapsed so the page stays short.
+function CollapsibleSection({
+  id,
+  eyebrow,
+  title,
+  desc,
+  count,
+  defaultOpen = false,
+  background,
+  children,
+}: {
+  id?: string;
+  eyebrow: string;
+  title: string;
+  desc?: string;
+  count?: number;
+  defaultOpen?: boolean;
+  background?: string;
+  children: React.ReactNode;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <section id={id} className="px-[6vw] py-8 sm:py-12" style={background ? { background } : undefined}>
+      <div className="max-w-6xl mx-auto">
+        <button
+          onClick={() => setOpen((o) => !o)}
+          aria-expanded={open}
+          className="w-full flex items-center gap-4 text-left group"
+        >
+          <div className="flex-1 min-w-0">
+            <p className="eyebrow mb-1">{eyebrow}</p>
+            <h2 className="font-display text-[clamp(28px,6vw,44px)] font-semibold leading-[1.05] tracking-tight" style={{ color: "#062f36" }}>
+              {title}
+              {typeof count === "number" && (
+                <span className="ml-2 align-middle text-[14px] font-black px-2.5 py-1 rounded-full" style={{ background: "#dff4f2", color: "#0f6f7d" }}>
+                  {count}
+                </span>
+              )}
+            </h2>
+          </div>
+          <span
+            className="flex-shrink-0 flex items-center justify-center w-11 h-11 rounded-full border transition-all duration-300 group-hover:border-[#0f6f7d]"
+            style={{
+              borderColor: "#dce9e7",
+              background: open ? "#0f6f7d" : "#ffffff",
+              color: open ? "#ffffff" : "#0f6f7d",
+              transform: open ? "rotate(180deg)" : "rotate(0deg)",
+            }}
+          >
+            {Icons.chevron}
+          </span>
+        </button>
+        {desc && <p className="section-desc max-w-[640px] mt-2">{desc}</p>}
+
+        <AnimatePresence initial={false}>
+          {open && (
+            <motion.div
+              key="body"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.35, ease: "easeInOut" }}
+              className="overflow-hidden"
+            >
+              <div className="pt-8">{children}</div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </section>
+  );
+}
+
+// Text that truncates with a Read more / Show less toggle.
+function ExpandableText({ text, clamp = 3, className = "" }: { text: string; clamp?: number; className?: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div>
+      <p
+        className={className}
+        style={
+          open
+            ? undefined
+            : {
+                display: "-webkit-box",
+                WebkitLineClamp: clamp,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+              }
+        }
+      >
+        {text}
+      </p>
+      <button
+        onClick={() => setOpen((o) => !o)}
+        className="mt-1.5 text-[13px] font-black inline-flex items-center gap-1 transition-colors hover:opacity-70"
+        style={{ color: "#0f6f7d" }}
+      >
+        {open ? "Show less" : "Read more"}
+      </button>
+    </div>
+  );
+}
 
 function Navbar() {
   const [open, setOpen] = useState(false);
@@ -213,7 +322,7 @@ function Hero() {
     <section
       id="home"
       ref={ref}
-      className="relative min-h-screen flex items-center overflow-hidden px-[6vw] pt-24 pb-16"
+      className="relative min-h-screen flex items-center overflow-hidden px-[6vw] pt-28 sm:pt-24 pb-16"
       style={{ background: "linear-gradient(135deg, #ffffff 0%, #eaf6f4 100%)" }}
     >
       {/* Background orbs */}
@@ -229,13 +338,13 @@ function Hero() {
         className="absolute right-[9vw] bottom-[15vh] w-80 h-80 rounded-full border border-[rgba(15,111,125,0.18)] pointer-events-none pulse-ring"
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-12 lg:gap-16 items-center w-full max-w-7xl mx-auto relative z-10">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-8 lg:gap-16 items-center w-full max-w-7xl mx-auto relative z-10">
         {/* Content */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="order-2 lg:order-1"
+          className="order-1"
         >
           <p className="eyebrow">Certified Robotic Surgeon</p>
           <h1
@@ -245,17 +354,17 @@ function Hero() {
             Dr. Rafiq<br />Simnani
           </h1>
           <p
-            className="text-[clamp(20px,2.5vw,28px)] font-black leading-snug mb-4"
+            className="text-[clamp(17px,2.5vw,28px)] font-black leading-snug mb-4"
             style={{ color: "#0f6f7d" }}
           >
             Senior Consultant — Minimally Invasive, Robotic &amp; Advanced Laparoscopic Surgery
           </p>
-          <p className="text-[18px] mb-6" style={{ color: "#607579" }}>
+          <p className="text-[16px] sm:text-[18px] mb-6" style={{ color: "#607579" }}>
             Pioneering minimally invasive surgery specialist with{" "}
             <strong>16+ years</strong> of experience and{" "}
             <strong>7,500+</strong> laparoscopic procedures.
           </p>
-          <div className="flex flex-wrap gap-3.5">
+          <div className="flex flex-wrap gap-3">
             <a href="tel:+919858369400" className="btn-primary">
               {Icons.phone} Book Appointment
             </a>
@@ -273,18 +382,18 @@ function Hero() {
           </div>
         </motion.div>
 
-        {/* WebGL surgical scene */}
+        {/* Portrait */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="relative order-1 lg:order-2 min-h-[480px] rounded-[32px] overflow-hidden shadow-[0_30px_80px_rgba(8,63,72,0.15)] ring-1 ring-black/5"
+          className="relative order-2 w-full h-[420px] sm:h-[480px] rounded-[24px] sm:rounded-[32px] overflow-hidden shadow-[0_30px_80px_rgba(8,63,72,0.15)] ring-1 ring-black/5"
         >
           <motion.img
             style={{ y: imgY }}
             src="https://res.cloudinary.com/usoylie5/image/upload/v1787903926/t.png"
             alt="Dr. Rafiq Simnani"
-            className="w-full h-[112%] object-cover"
+            className="absolute inset-0 w-full h-[115%] object-cover object-top"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#062f36]/60 pointer-events-none" />
           <div className="absolute bottom-8 left-8 right-8 z-20">
@@ -320,8 +429,8 @@ function StatsBar() {
   }, []);
 
   return (
-    <section className="px-[6vw] -mt-11 relative z-20">
-      <div className="max-w-5xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <section className="px-[6vw] mt-4 sm:-mt-11 relative z-20">
+      <div className="max-w-5xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {stats.map((s, i) => (
           <motion.div
             key={s.label}
@@ -329,12 +438,12 @@ function StatsBar() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.1 }}
-            className="text-center p-6 rounded-[26px] bg-white/90 border border-[#dce9e7] shadow-[0_18px_42px_rgba(8,63,72,0.1)] backdrop-blur-md"
+            className="text-center p-4 sm:p-6 rounded-2xl sm:rounded-[26px] bg-white/90 border border-[#dce9e7] shadow-[0_18px_42px_rgba(8,63,72,0.1)] backdrop-blur-md"
           >
-            <strong className="font-display text-[clamp(40px,5.5vw,64px)] font-semibold leading-none" style={{ color: "#062f36" }}>
+            <strong className="font-display text-[clamp(34px,10vw,64px)] font-semibold leading-none" style={{ color: "#062f36" }}>
               {counts[i].toLocaleString()}{s.suffix}
             </strong>
-            <p className="text-sm font-extrabold mt-2" style={{ color: "#607579" }}>
+            <p className="text-[13px] sm:text-sm font-extrabold mt-2 leading-tight" style={{ color: "#607579" }}>
               {s.label}
             </p>
           </motion.div>
@@ -346,38 +455,31 @@ function StatsBar() {
 
 function Innovations() {
   return (
-    <section id="innovations" className="px-[6vw] py-20" style={{ background: "linear-gradient(180deg, #f5faf9 0%, #ffffff 100%)" }}>
-      <div className="section-heading">
-        <p className="eyebrow">Innovations</p>
-        <h2>Landmark Breakthroughs</h2>
-        <p className="section-desc">
-          Pioneering contributions that redefined surgical standards in the region and beyond.
-        </p>
-      </div>
-
-      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+    <CollapsibleSection
+      id="innovations"
+      eyebrow="Innovations"
+      title="Landmark Breakthroughs"
+      desc="Pioneering contributions that redefined surgical standards in the region and beyond."
+      count={innovations.length}
+      defaultOpen
+      background="linear-gradient(180deg, #f5faf9 0%, #ffffff 100%)"
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
         {innovations.map((item, i) => (
-          <motion.div
+          <div
             key={item.year}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.1, duration: 0.6 }}
-            className="group relative bg-white border border-[#dce9e7] rounded-3xl p-8 flex gap-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_50px_rgba(8,63,72,0.14)] overflow-hidden cursor-pointer"
+            className="group relative bg-white border border-[#dce9e7] rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row gap-5 sm:gap-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_50px_rgba(8,63,72,0.14)] overflow-hidden"
           >
-            {/* Top accent bar */}
             <div
               className="absolute top-0 left-0 right-0 h-1 origin-left transition-transform duration-300 scale-x-0 group-hover:scale-x-100"
               style={{ background: "linear-gradient(90deg, #0f6f7d, #d8a847)" }}
             />
-
             <div
               className="flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center text-white"
               style={{ background: "linear-gradient(135deg, #0f6f7d, #062f36)", boxShadow: "0 8px 18px rgba(15,111,125,0.25)" }}
             >
               {innovationIcons[i]}
             </div>
-
             <div className="flex-1 min-w-0">
               <span
                 className="inline-block text-xs font-black px-3 py-1 rounded-full mb-3"
@@ -385,38 +487,37 @@ function Innovations() {
               >
                 {item.year}
               </span>
-              <h3 className="font-display text-[26px] font-semibold mb-2 leading-tight" style={{ color: "#062f36" }}>
+              <h3 className="font-display text-[24px] sm:text-[26px] font-semibold mb-2 leading-tight" style={{ color: "#062f36" }}>
                 {item.title}
               </h3>
-              <p className="text-[15px] leading-relaxed mb-4" style={{ color: "#607579" }}>
-                {item.description}
-              </p>
+              <ExpandableText
+                text={item.description}
+                clamp={2}
+                className="text-[15px] leading-relaxed"
+              />
               <span
-                className="inline-block text-xs font-black px-3 py-1 rounded-full"
+                className="inline-block text-xs font-black px-3 py-1 rounded-full mt-3"
                 style={{ background: "#fff2cf", color: "#8a6a1d" }}
               >
                 {item.tag}
               </span>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
-    </section>
+    </CollapsibleSection>
   );
 }
 
 function Milestones() {
   return (
-    <section
+    <CollapsibleSection
       id="milestones"
-      className="px-[6vw] py-20"
-      style={{ background: "linear-gradient(135deg, #ffffff 0%, #eef9f7 100%)" }}
+      eyebrow="Career Milestones"
+      title="My Evolution in Surgical Excellence"
+      count={milestones.length}
+      background="linear-gradient(135deg, #ffffff 0%, #eef9f7 100%)"
     >
-      <div className="section-heading">
-        <p className="eyebrow">Career Milestones</p>
-        <h2>My Evolution in Surgical Excellence</h2>
-      </div>
-
       <div className="max-w-4xl mx-auto relative">
         {/* Vertical line */}
         <div
@@ -424,15 +525,11 @@ function Milestones() {
           style={{ background: "linear-gradient(180deg, #0f6f7d, #d8a847)" }}
         />
 
-        <div className="flex flex-col gap-5">
-          {milestones.map((m, i) => (
-            <motion.div
+        <div className="flex flex-col gap-4">
+          {milestones.map((m) => (
+            <div
               key={m.id}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08, duration: 0.5 }}
-              className="relative bg-white border border-[#dce9e7] rounded-2xl p-6 pl-[120px] md:pl-[110px] pr-6 transition-all duration-200 hover:shadow-[0_18px_40px_rgba(8,63,72,0.12)] hover:translate-x-1"
+              className="relative bg-white border border-[#dce9e7] rounded-2xl p-5 sm:p-6 md:pl-[110px] transition-all duration-200 hover:shadow-[0_18px_40px_rgba(8,63,72,0.12)] hover:translate-x-1"
             >
               <span
                 className="absolute left-0 top-5 w-[80px] text-right pr-4 text-[18px] font-black hidden md:block"
@@ -440,28 +537,30 @@ function Milestones() {
               >
                 {m.year}
               </span>
-              <h3 className="text-[19px] font-black mb-1" style={{ color: "#062f36" }}>
+              <span
+                className="inline-block md:hidden text-xs font-black px-2.5 py-1 rounded-full mb-2"
+                style={{ background: "#dff4f2", color: "#0f6f7d" }}
+              >
+                {m.year}
+              </span>
+              <h3 className="text-[18px] sm:text-[19px] font-black mb-1 leading-snug" style={{ color: "#062f36" }}>
                 {m.title}
               </h3>
               <p className="text-[15px]" style={{ color: "#607579" }}>
                 {m.text}
               </p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
-    </section>
+    </CollapsibleSection>
   );
 }
 
 function DistinguishedAchievements() {
   return (
-    <section className="px-[6vw] py-16">
-      <div className="section-heading">
-        <p className="eyebrow">Legacy</p>
-        <h2>Distinguished Achievements</h2>
-      </div>
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+    <CollapsibleSection eyebrow="Legacy" title="Distinguished Achievements">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8">
         {[
           {
             title: "World-First Surgical Innovations",
@@ -490,16 +589,12 @@ function DistinguishedAchievements() {
             ],
           },
         ].map((group) => (
-          <motion.div
+          <div
             key={group.title}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="bg-white border border-[#dce9e7] rounded-3xl p-8 shadow-[0_24px_70px_rgba(8,63,72,0.08)]"
+            className="bg-white border border-[#dce9e7] rounded-3xl p-6 sm:p-8 shadow-[0_24px_70px_rgba(8,63,72,0.08)]"
           >
             <p className="eyebrow">{group.title.split(" ")[0]}</p>
-            <h3 className="font-display text-[26px] font-semibold mb-5 leading-tight" style={{ color: "#062f36" }}>
+            <h3 className="font-display text-[24px] sm:text-[26px] font-semibold mb-5 leading-tight" style={{ color: "#062f36" }}>
               {group.title}
             </h3>
             <ul className="space-y-4">
@@ -510,21 +605,17 @@ function DistinguishedAchievements() {
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
         ))}
       </div>
-    </section>
+    </CollapsibleSection>
   );
 }
 
 function AcademicContributions() {
   return (
-    <section className="px-[6vw] py-16">
-      <div className="section-heading">
-        <p className="eyebrow">Research & Mentorship</p>
-        <h2>Academic Contributions & Research</h2>
-      </div>
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+    <CollapsibleSection eyebrow="Research & Mentorship" title="Academic Contributions & Research" background="linear-gradient(135deg, #ffffff 0%, #eef9f7 100%)">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8">
         {[
           {
             title: "Publications & Conference Presentations",
@@ -550,16 +641,12 @@ function AcademicContributions() {
             ],
           },
         ].map((group) => (
-          <motion.div
+          <div
             key={group.title}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="bg-white border border-[#dce9e7] rounded-3xl p-8 shadow-[0_24px_70px_rgba(8,63,72,0.08)]"
+            className="bg-white border border-[#dce9e7] rounded-3xl p-6 sm:p-8 shadow-[0_24px_70px_rgba(8,63,72,0.08)]"
           >
             <p className="eyebrow">{group.title.split(" ")[0]}</p>
-            <h3 className="font-display text-[26px] font-semibold mb-5 leading-tight" style={{ color: "#062f36" }}>
+            <h3 className="font-display text-[24px] sm:text-[26px] font-semibold mb-5 leading-tight" style={{ color: "#062f36" }}>
               {group.title}
             </h3>
             <ul className="space-y-4">
@@ -570,32 +657,23 @@ function AcademicContributions() {
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
         ))}
       </div>
-    </section>
+    </CollapsibleSection>
   );
 }
 
 function Credentials() {
   return (
-    <section id="credentials" className="px-[6vw] py-20">
-      <div className="section-heading">
-        <p className="eyebrow">Credentials</p>
-        <h2>Qualifications &amp; Affiliations</h2>
-      </div>
-
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+    <CollapsibleSection id="credentials" eyebrow="Credentials" title="Qualifications & Affiliations">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8">
         {/* Education */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="bg-white border border-[#dce9e7] rounded-3xl p-8"
+        <div
+          className="bg-white border border-[#dce9e7] rounded-3xl p-6 sm:p-8"
         >
           <p className="eyebrow">Education</p>
-          <h3 className="font-display text-[26px] font-semibold mb-5 leading-tight" style={{ color: "#062f36" }}>
+          <h3 className="font-display text-[24px] sm:text-[26px] font-semibold mb-5 leading-tight" style={{ color: "#062f36" }}>
             Academic &amp; Surgical Training
           </h3>
           <ul className="space-y-3">
@@ -606,18 +684,14 @@ function Credentials() {
               </li>
             ))}
           </ul>
-        </motion.div>
+        </div>
 
         {/* Expertise */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1, duration: 0.5 }}
-          className="bg-white border border-[#dce9e7] rounded-3xl p-8"
+        <div
+          className="bg-white border border-[#dce9e7] rounded-3xl p-6 sm:p-8"
         >
           <p className="eyebrow">Areas of Expertise</p>
-          <h3 className="font-display text-[26px] font-semibold mb-5 leading-tight" style={{ color: "#062f36" }}>
+          <h3 className="font-display text-[24px] sm:text-[26px] font-semibold mb-5 leading-tight" style={{ color: "#062f36" }}>
             What I Operate On
           </h3>
           <ul className="space-y-3">
@@ -628,18 +702,14 @@ function Credentials() {
               </li>
             ))}
           </ul>
-        </motion.div>
+        </div>
 
         {/* Memberships */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2, duration: 0.5 }}
-          className="bg-white border border-[#dce9e7] rounded-3xl p-8"
+        <div
+          className="bg-white border border-[#dce9e7] rounded-3xl p-6 sm:p-8"
         >
           <p className="eyebrow">Memberships</p>
-          <h3 className="font-display text-[26px] font-semibold mb-5 leading-tight" style={{ color: "#062f36" }}>
+          <h3 className="font-display text-[24px] sm:text-[26px] font-semibold mb-5 leading-tight" style={{ color: "#062f36" }}>
             Professional Affiliations
           </h3>
           <ul className="space-y-3">
@@ -650,9 +720,9 @@ function Credentials() {
               </li>
             ))}
           </ul>
-        </motion.div>
+        </div>
       </div>
-    </section>
+    </CollapsibleSection>
   );
 }
 
@@ -660,23 +730,14 @@ function Gallery() {
   const [activeTab, setActiveTab] = useState<"felicitations" | "media">("felicitations");
 
   return (
-    <section
-      id="gallery"
-      className="px-[6vw] py-20"
-      style={{ background: "#ffffff" }}
-    >
-      <div className="section-heading">
-        <p className="eyebrow">Visual Archive</p>
-        <h2>Photo Gallery &amp; Media</h2>
-      </div>
-
+    <CollapsibleSection id="gallery" eyebrow="Visual Archive" title="Photo Gallery & Media">
       {/* Tabs */}
-      <div className="flex max-w-[700px] mx-auto mb-10 border-b-2 border-[#e5edec]">
+      <div className="flex max-w-[700px] mx-auto mb-8 border-b-2 border-[#e5edec]">
         {(["felicitations", "media"] as const).map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className="relative flex-1 py-3.5 px-6 text-sm font-extrabold transition-colors"
+            className="relative flex-1 py-3 px-3 sm:px-6 text-[13px] sm:text-sm font-extrabold transition-colors"
             style={{ color: activeTab === tab ? "#062f36" : "#607579" }}
           >
             {tab === "felicitations" ? "Felicitations & Awards" : "Media Coverage"}
@@ -742,7 +803,7 @@ function Gallery() {
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: Math.min(i * 0.05, 0.4) }}
-                className="group flex items-center gap-5 p-5 bg-white border border-[#dce9e7] rounded-2xl no-underline transition-all hover:shadow-[0_18px_40px_rgba(8,63,72,0.1)] hover:border-[rgba(15,111,125,0.3)] hover:translate-x-1"
+                className="group flex items-center gap-3 sm:gap-5 p-4 sm:p-5 bg-white border border-[#dce9e7] rounded-2xl no-underline transition-all hover:shadow-[0_18px_40px_rgba(8,63,72,0.1)] hover:border-[rgba(15,111,125,0.3)] hover:translate-x-1"
               >
                 <div
                   className="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center text-[#0f6f7d]"
@@ -779,7 +840,7 @@ function Gallery() {
           </motion.div>
         )}
       </AnimatePresence>
-    </section>
+    </CollapsibleSection>
   );
 }
 
