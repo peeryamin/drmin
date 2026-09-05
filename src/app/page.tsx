@@ -740,10 +740,9 @@ function Gallery() {
                 target={item.url ? "_blank" : undefined}
                 rel={item.url ? "noopener noreferrer" : undefined}
                 initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                className="group flex items-center gap-5 p-5 bg-white border border-[#dce9e7] rounded-2xl text-decoration-none transition-all hover:shadow-[0_18px_40px_rgba(8,63,72,0.1)] hover:border-[rgba(15,111,125,0.3)] hover:translate-x-1"
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: Math.min(i * 0.05, 0.4) }}
+                className="group flex items-center gap-5 p-5 bg-white border border-[#dce9e7] rounded-2xl no-underline transition-all hover:shadow-[0_18px_40px_rgba(8,63,72,0.1)] hover:border-[rgba(15,111,125,0.3)] hover:translate-x-1"
               >
                 <div
                   className="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center text-[#0f6f7d]"
