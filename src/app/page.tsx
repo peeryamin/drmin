@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import SurgicalScene from "@/components/SurgicalScene";
 import {
   innovations,
   milestones,
@@ -207,9 +206,8 @@ function FloatingActions() {
 
 function Hero() {
   const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref });
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
 
   return (
     <section
@@ -241,7 +239,7 @@ function Hero() {
         >
           <p className="eyebrow">Certified Robotic Surgeon</p>
           <h1
-            className="text-[clamp(48px,7vw,92px)] font-black leading-[0.94] tracking-[-0.06em] mb-4"
+            className="font-display text-[clamp(56px,8vw,108px)] font-semibold leading-[0.9] tracking-[-0.02em] mb-4"
             style={{ color: "#062f36" }}
           >
             Dr. Rafiq<br />Simnani
@@ -280,15 +278,18 @@ function Hero() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="relative order-1 lg:order-2 min-h-[480px] rounded-[32px] overflow-hidden border border-white/20 shadow-[0_30px_80px_rgba(8,63,72,0.15)]"
+          className="relative order-1 lg:order-2 min-h-[480px] rounded-[32px] overflow-hidden shadow-[0_30px_80px_rgba(8,63,72,0.15)] ring-1 ring-black/5"
         >
-          <div className="absolute inset-0 z-0">
-            <SurgicalScene />
-          </div>
-          <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-transparent to-[#062f36]/80 pointer-events-none" />
+          <motion.img
+            style={{ y: imgY }}
+            src="https://res.cloudinary.com/usoylie5/image/upload/v1787903926/t.png"
+            alt="Dr. Rafiq Simnani"
+            className="w-full h-[112%] object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#062f36]/60 pointer-events-none" />
           <div className="absolute bottom-8 left-8 right-8 z-20">
-            <p className="text-[12px] tracking-[0.2em] uppercase text-[#d8a847] mb-1">Field of View</p>
-            <h3 className="text-xl font-black text-white tracking-tight">Laparoscopic Perspective</h3>
+            <p className="text-[12px] tracking-[0.2em] uppercase text-[#d8a847] mb-1">Dr. Rafiq Simnani</p>
+            <h3 className="text-xl font-black text-white tracking-tight">Senior Consultant — Minimally Invasive Surgery</h3>
           </div>
         </motion.div>
       {/* Floating badges removed */}
@@ -302,6 +303,7 @@ function StatsBar() {
     { value: 16, suffix: "+", label: "Years Experience" },
     { value: 7500, suffix: "+", label: "Laparoscopic Procedures" },
     { value: 15, suffix: "+", label: "Conferences" },
+    { value: 100, suffix: "+", label: "Workshops" },
   ];
   const [counts, setCounts] = useState(stats.map(() => 0));
 
@@ -329,8 +331,8 @@ function StatsBar() {
             transition={{ delay: i * 0.1 }}
             className="text-center p-6 rounded-[26px] bg-white/90 border border-[#dce9e7] shadow-[0_18px_42px_rgba(8,63,72,0.1)] backdrop-blur-md"
           >
-            <strong className="text-[clamp(34px,5vw,58px)] font-black leading-none" style={{ color: "#062f36" }}>
-              {i === 3 ? "2026+" : counts[i].toLocaleString()}{i !== 3 ? s.suffix : ""}
+            <strong className="font-display text-[clamp(40px,5.5vw,64px)] font-semibold leading-none" style={{ color: "#062f36" }}>
+              {counts[i].toLocaleString()}{s.suffix}
             </strong>
             <p className="text-sm font-extrabold mt-2" style={{ color: "#607579" }}>
               {s.label}
@@ -383,7 +385,7 @@ function Innovations() {
               >
                 {item.year}
               </span>
-              <h3 className="text-[22px] font-black mb-2 leading-snug" style={{ color: "#062f36" }}>
+              <h3 className="font-display text-[26px] font-semibold mb-2 leading-tight" style={{ color: "#062f36" }}>
                 {item.title}
               </h3>
               <p className="text-[15px] leading-relaxed mb-4" style={{ color: "#607579" }}>
@@ -398,36 +400,6 @@ function Innovations() {
             </div>
           </motion.div>
         ))}
-      </div>
-    </section>
-  );
-}
-
-function ArticleSection() {
-  return (
-    <section className="px-[6vw] py-16">
-      <div className="max-w-4xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="bg-white border border-[#dce9e7] rounded-3xl p-8 md:p-12 shadow-[0_18px_42px_rgba(8,63,72,0.08)]"
-        >
-          <span className="eyebrow text-[#0f6f7d]">Srinagar, Aug 19 — Day-Care Laparoscopic Surgery</span>
-          <p className="text-[15px] leading-relaxed mb-4" style={{ color: "#183236" }}>
-            Doctors and patients are excited about the advances in laparoscopic surgeries of the gallbladder in Kashmir. Patients suffering from gallstones, gallbladder polyps and related issues are having event-free surgeries and getting admitted, operated and discharged the same day — significantly reducing hospital stay times and expenses.
-          </p>
-          <p className="text-[15px] leading-relaxed mb-4" style={{ color: "#183236" }}>
-            Day-care <em>Laparoscopic Cholecystectomy</em>, which is performed only at a few advanced surgical centers in the country, has been started in Kashmir by one of the senior-most Laparoscopic and Robotic surgeons, <strong>Dr. Rafiq Simnani</strong>. He shared that this is the first such facility in the Valley, in practice for the past six months.
-          </p>
-          <p className="text-[15px] leading-relaxed mb-4" style={{ color: "#183236" }}>
-            "The aim of this advanced day-care laparoscopic surgery is to give the best surgical solution with the best comfort to patients' sufferings, in the shortest possible time — which at the same time lessens the psychological stress of the patients and the family to a significant extent. Overall it is cost-effective," he said.
-          </p>
-          <p className="text-[15px] leading-relaxed" style={{ color: "#183236" }}>
-            On <strong>August 15</strong>, Dr. Simnani performed the <strong>world's first day-care laparoscopic belly-button cholecystectomy</strong>. The 41-year-old patient from Srinagar had undergone multiple open surgeries previously and presented with fresh gallstone disease. The procedure was performed entirely through a single 10 mm umbilical incision with no other abdominal cuts. The patient was put on oral diet and discharged the same afternoon — a procedure not reported anywhere in medical literature till now.
-          </p>
-        </motion.div>
       </div>
     </section>
   );
@@ -455,7 +427,7 @@ function Milestones() {
         <div className="flex flex-col gap-5">
           {milestones.map((m, i) => (
             <motion.div
-              key={m.year}
+              key={m.id}
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -495,16 +467,17 @@ function DistinguishedAchievements() {
             title: "World-First Surgical Innovations",
             items: [
               "World's first \"Single-Port Day Care Cholecystectomy\" — pioneering outpatient minimally invasive approach",
-              "World's first \"Single-Port Laparoscopic Double Organ Surgery\" (Cholecystectomy with Ovarian Cystectomy) — 2010",
-              "Regional pioneer: First introduction of single-port laparoscopic surgery in Kashmir Valley (2010)",
+              "World's first \"Single-Port Laparoscopic Double Organ Surgery\" (Cholecystectomy with Ovarian Cystectomy)",
+              "Regional pioneer: First introduction of single-port laparoscopic surgery in Kashmir Valley",
             ],
           },
           {
             title: "Clinical Excellence Milestones",
             items: [
+              "Awarded Dr. APJ Abdul Kalam National Star Award (2026) — recognizing exceptional contributions to medical science and surgical innovation",
               "Successfully performed laparoscopic cholecystectomy on a 105-year-old patient — second oldest case in world medical literature",
-              "Pioneered day-care laparoscopic surgery programs in Kashmir Valley (since February 2025)",
-              "Invented proprietary \"Simnani's Technique\" for mini-laparoscopic management of large gallstones (under patent process)",
+              "Pioneered day-care laparoscopic surgery programs in Kashmir Valley",
+              "Invented proprietary \"Simnani's Technique\" for mini-laparoscopic management of large gallstones — under patent process",
             ],
           },
           {
@@ -526,7 +499,7 @@ function DistinguishedAchievements() {
             className="bg-white border border-[#dce9e7] rounded-3xl p-8 shadow-[0_24px_70px_rgba(8,63,72,0.08)]"
           >
             <p className="eyebrow">{group.title.split(" ")[0]}</p>
-            <h3 className="text-xl font-black mb-5" style={{ color: "#062f36" }}>
+            <h3 className="font-display text-[26px] font-semibold mb-5 leading-tight" style={{ color: "#062f36" }}>
               {group.title}
             </h3>
             <ul className="space-y-4">
@@ -586,7 +559,7 @@ function AcademicContributions() {
             className="bg-white border border-[#dce9e7] rounded-3xl p-8 shadow-[0_24px_70px_rgba(8,63,72,0.08)]"
           >
             <p className="eyebrow">{group.title.split(" ")[0]}</p>
-            <h3 className="text-xl font-black mb-5" style={{ color: "#062f36" }}>
+            <h3 className="font-display text-[26px] font-semibold mb-5 leading-tight" style={{ color: "#062f36" }}>
               {group.title}
             </h3>
             <ul className="space-y-4">
@@ -622,7 +595,7 @@ function Credentials() {
           className="bg-white border border-[#dce9e7] rounded-3xl p-8"
         >
           <p className="eyebrow">Education</p>
-          <h3 className="text-xl font-black mb-5" style={{ color: "#062f36" }}>
+          <h3 className="font-display text-[26px] font-semibold mb-5 leading-tight" style={{ color: "#062f36" }}>
             Academic &amp; Surgical Training
           </h3>
           <ul className="space-y-3">
@@ -644,7 +617,7 @@ function Credentials() {
           className="bg-white border border-[#dce9e7] rounded-3xl p-8"
         >
           <p className="eyebrow">Areas of Expertise</p>
-          <h3 className="text-xl font-black mb-5" style={{ color: "#062f36" }}>
+          <h3 className="font-display text-[26px] font-semibold mb-5 leading-tight" style={{ color: "#062f36" }}>
             What I Operate On
           </h3>
           <ul className="space-y-3">
@@ -666,7 +639,7 @@ function Credentials() {
           className="bg-white border border-[#dce9e7] rounded-3xl p-8"
         >
           <p className="eyebrow">Memberships</p>
-          <h3 className="text-xl font-black mb-5" style={{ color: "#062f36" }}>
+          <h3 className="font-display text-[26px] font-semibold mb-5 leading-tight" style={{ color: "#062f36" }}>
             Professional Affiliations
           </h3>
           <ul className="space-y-3">
@@ -762,8 +735,10 @@ function Gallery() {
           >
             {newsArticles.map((item, i) => (
               <motion.a
-                key={item.source}
-                href={item.url || `#${i}`}
+                key={item.id}
+                href={item.url || `#${item.id}`}
+                target={item.url ? "_blank" : undefined}
+                rel={item.url ? "noopener noreferrer" : undefined}
                 initial={{ opacity: 0, x: -10 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -777,10 +752,21 @@ function Gallery() {
                   {Icons.doc}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <strong className="block text-[16px] font-black mb-0.5" style={{ color: "#062f36" }}>
-                    {item.source}
+                  <div className="flex items-center gap-2 mb-1">
+                    <span
+                      className="inline-block text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider"
+                      style={{ background: "#fff2cf", color: item.tagColor }}
+                    >
+                      {item.tag}
+                    </span>
+                    <span className="text-[12px] font-bold" style={{ color: "#9aa8ab" }}>
+                      {item.source} · {item.date}
+                    </span>
+                  </div>
+                  <strong className="block text-[16px] font-black mb-0.5 leading-snug" style={{ color: "#062f36" }}>
+                    {item.title}
                   </strong>
-                  <p className="text-[14px] truncate" style={{ color: "#607579" }}>
+                  <p className="text-[14px] line-clamp-2" style={{ color: "#607579" }}>
                     {item.excerpt}
                   </p>
                 </div>
@@ -835,14 +821,11 @@ export default function Home() {
       <Hero />
       <StatsBar />
       <Innovations />
-      <ArticleSection />
       <Milestones />
       <DistinguishedAchievements />
       <AcademicContributions />
       <Credentials />
       <Gallery />
-      <DistinguishedAchievements />
-      <AcademicContributions />
       <Footer />
     </>
   );
